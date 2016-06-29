@@ -30,6 +30,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
   <xacro:include filename="$(find husky_description)/urdf/wheel.urdf.xacro" />
 
   <xacro:include filename="$(find husky_description)/urdf/accessories/kinect_camera.urdf.xacro"/>
+  <xacro:include filename="$(find husky_description)/urdf/accessories/kinectv2_camera.urdf.xacro"/>
   <xacro:include filename="$(find husky_description)/urdf/accessories/sick_lms1xx_mount.urdf.xacro"/>
   <xacro:include filename="$(find husky_description)/urdf/accessories/sensor_arch.urdf.xacro"/>
   <xacro:include filename="$(find ur_description)/urdf/ur5.urdf.xacro" />
@@ -86,9 +87,9 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
     <!-- Interial link stores the robot's inertial information -->
     <link name="inertial_link">
       <inertial>
-        <mass value="33.455" />
+        <mass value="60" />
         <origin xyz="-0.08748 -0.00085 0.09947" />
-        <inertia ixx="0.6022" ixy="-0.02364" ixz="-0.1197" iyy="1.7386" iyz="-0.001544" izz="2.0296" />
+        <inertia ixx="1.08995475113" ixy="-0.0427873303" ixz="-0.2166515837" iyy="3.14678733031" iyz="-0.00279457012" izz="3.67348416289" />
       </inertial>
     </link>
 
@@ -141,12 +142,28 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 
     </xacro:if>
 
+    <xacro:if value="$(arg ur5_camera_enabled)">
+
+      <xacro:property name="reflect" value="-1" />
+
+      <!-- Spawn arm -->
+      <xacro:ur5_robot prefix="ur5_arm_" joint_limited="true"/>
+
+      <!-- Join arm -->
+      <joint name="ur5_arm_base" type="fixed">
+        <parent link="top_plate_link" />
+        <child link="ur5_arm_base_link" />
+        <origin xyz="0.3058 0 0.0065" rpy="0.0 0.0 -1.57" />
+      </joint>
+
+    </xacro:if>
+
     <xacro:if value="$(arg laser_enabled)">
 
       <sick_lms1xx_mount prefix="base" topic="scan"/>
 
       <joint name="laser_mount_joint" type="fixed">
-        <origin xyz="$(optenv HUSKY_LMS1XX_XYZ 0.2206 0.0 0.00635)"
+        <origin xyz="$(optenv HUSKY_LMS1XX_XYZ 0.415 0.0 -0.04)"
                 rpy="$(optenv HUSKY_LMS1XX_RPY 0.0 0.0 0.0)" />
         <parent link="top_plate_link" />
         <child link="base_laser_mount" />
@@ -166,6 +183,47 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       </joint>
 
       <xacro:kinect_camera prefix="camera"/>
+    </xacro:if>
+
+    <xacro:if value="$(arg kinectv2_enabled)">
+
+      <xacro:sensor_arch prefix="" parent="top_plate_link">
+        <origin xyz="-0.35 0.0 0.51" rpy="0.0 0.0 -3.14"/>
+      </xacro:sensor_arch>
+
+      <!-- Attach the camera mount to the sensor arch -->
+      <joint name="camera_mount_joint" type="fixed">
+           <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+           <parent link="sensor_arch_mount_link"/>
+           <child link="camera_mount_link"/>
+      </joint>
+
+      <!-- Spawn the kinectv2 mount link -->
+      <link name="camera_mount_link">
+        <visual>
+          <origin xyz="0.0 0.0 0.0" rpy="1.57 0.0 1.57"/>
+          <geometry>
+            <mesh filename="package://husky_description/meshes/accessories/kinectv2_mount.dae" />
+          </geometry>
+          <material name="LightGrey">
+            <color rgba="0.2 0.2 0.2 1.0"/>
+          </material>
+        </visual>
+        <collision>
+          <origin xyz="0.0 0.0 0.0" rpy="1.57 0.0 1.57"/>
+          <geometry>
+            <mesh filename="package://husky_description/meshes/accessories/kinectv2_mount.stl" />
+          </geometry>
+        </collision>
+      </link>
+
+      <joint name="kinect_frame_joint" type="fixed">
+        <origin xyz="$(optenv HUSKY_KINECT_XYZ 0.0 0.095 0.11)" rpy="$(optenv HUSKY_KINECT_RPY 0.0 0.18 3.14)" />
+        <parent link="camera_mount_link"/>
+        <child link="camera_link"/>
+      </joint>
+
+      <xacro:kinectv2_camera prefix="camera"/>
     </xacro:if>
 
   </xacro:macro>
