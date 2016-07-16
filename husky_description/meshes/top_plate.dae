@@ -248,7 +248,7 @@
               <vertices id="Top_Plate-mesh-vertices">
                   <input semantic="POSITION" source="#Top_Plate-mesh-positions"/>
               </vertices>
-              <triangles count="28">
+              <triangles material="Dark-material" count="28">
                   <input semantic="VERTEX" source="#Top_Plate-mesh-vertices" offset="0"/>
                   <input semantic="NORMAL" source="#Top_Plate-mesh-normals" offset="1"/>
                   <p>2 0 0 0 1 0 1 1 0 1 11 1 15 2 2 2 12 2 12 3 2 3 1 3 3 4 15 4 13 4 13 5 15 5 12 5 4 6 3 6 6 6 6 7 3 7 13 7 7 8 4 8 5 8 5 9 4 9 6 9 14 10 7 10 8 10 8 11 7 11 5 11 9 12 14 12 10 12 10 13 14 13 8 13 0 14 9 14 11 14 11 15 9 15 10 15 11 16 10 16 1 16 1 17 10 17 8 17 5 18 1 18 8 18 5 19 12 19 1 19 5 20 6 20 12 20 12 21 6 21 13 21 0 22 2 22 9 22 9 23 2 23 14 23 14 24 2 24 7 24 7 25 2 25 15 25 4 26 15 26 3 26 4 27 7 27 15 27</p>
