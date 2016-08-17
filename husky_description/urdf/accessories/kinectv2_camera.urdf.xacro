@@ -27,11 +27,11 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
-<robot xmlns:xacro="http://ros.org/wiki/xacro" name="kinect_camera">
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="kinectv2_camera">
 
   <xacro:macro name="kinectv2_camera" params="prefix:=camera">
     <!-- Create kinect reference frame -->
-    <!-- Add mesh for kinect -->
+    <!-- Add mesh for kinectv2 -->
     <link name="${prefix}_link">
       <visual>
         <origin xyz="0.0 0.095 -0.04" rpy="0 0 ${-1*M_PI/2}"/>
