@@ -112,7 +112,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
   <!-- Can be modified with environment variables in /etc/ros/setup.bash -->
   <link name="imu_link"/>
   <joint name="imu_joint" type="fixed">
-    <origin rpy="0 -1.5708 3.1416" xyz="0.19 0 0.149"/>
+    <origin rpy="0 -1.5708 3.14159265359" xyz="0.19 0 0.149"/>
     <parent link="base_link"/>
     <child link="imu_link"/>
   </joint>
@@ -139,8 +139,8 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
     </collision>
   </link>
   <gazebo reference="front_left_wheel_link">
-    <mu1 value="0.15"/>
-    <mu2 value="0.15"/>
+    <mu1 value="0.025"/>
+    <mu2 value="0.025"/>
     <kp value="10000000.0"/>
     <kd value="1.0"/>
     <fdir1 value="1 0 0"/>
@@ -180,8 +180,8 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
     </collision>
   </link>
   <gazebo reference="front_right_wheel_link">
-    <mu1 value="0.15"/>
-    <mu2 value="0.15"/>
+    <mu1 value="0.025"/>
+    <mu2 value="0.025"/>
     <kp value="10000000.0"/>
     <kd value="1.0"/>
     <fdir1 value="1 0 0"/>
@@ -221,8 +221,8 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
     </collision>
   </link>
   <gazebo reference="rear_left_wheel_link">
-    <mu1 value="0.15"/>
-    <mu2 value="0.15"/>
+    <mu1 value="0.025"/>
+    <mu2 value="0.025"/>
     <kp value="10000000.0"/>
     <kd value="1.0"/>
     <fdir1 value="1 0 0"/>
@@ -262,8 +262,8 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
     </collision>
   </link>
   <gazebo reference="rear_right_wheel_link">
-    <mu1 value="0.15"/>
-    <mu2 value="0.15"/>
+    <mu1 value="0.025"/>
+    <mu2 value="0.025"/>
     <kp value="10000000.0"/>
     <kd value="1.0"/>
     <fdir1 value="1 0 0"/>
@@ -642,60 +642,66 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
     <parent link="ur5_arm_wrist_3_link"/>
     <child link="ur5_arm_tool0"/>
   </joint>
-  <joint name="ur5_arm_tool_mount_joint" type="fixed">
+  <joint name="ur5_arm_camera_mount_joint" type="fixed">
     <origin rpy="0.0 0.0 1.570796325" xyz="0.0 0.0823 0.0"/>
     <parent link="ur5_arm_wrist_3_link"/>
-    <child link="ur5_arm_tool_mount_link"/>
+    <child link="ur5_arm_camera_mount_link"/>
   </joint>
-  <link name="ur5_arm_tool_mount_link">
+  <link name="ur5_arm_camera_mount_link">
     <visual>
-      <origin rpy="0.0 1.570796325 0.0" xyz="0.0 0.0 0.0"/>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://ur_description/meshes/ur5/visual/tool_mount.dae"/>
+        <mesh filename="package://ur_description/meshes/ur5/visual/camera_mount.dae" scale="0.001 0.001 0.001"/>
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0.0 1.570796325 0.0" xyz="0.0 0.0 0.0"/>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://ur_description/meshes/ur5/collision/tool_mount.stl"/>
+        <mesh filename="package://ur_description/meshes/ur5/collision/camera_mount.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
   <joint name="ur5_arm_camera_joint" type="fixed">
-    <origin rpy="0.0 0.0 0.0" xyz="0.11 0.0 0.055"/>
-    <parent link="ur5_arm_tool_mount_link"/>
+    <origin rpy="0.0 0.29984756549263 0.0" xyz=".056433755002348 0.0 0.069206449979048"/>
+    <parent link="ur5_arm_camera_mount_link"/>
     <child link="ur5_arm_camera_link"/>
   </joint>
   <link name="ur5_arm_camera_link">
     <visual>
-      <origin rpy="0.0 -1.57 0.0" xyz="-0.11 0.0 0.0"/>
+      <origin rpy="0.0 0.0 0.0" xyz="-0.0295 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://ur_description/meshes/ur5/visual/camera.dae"/>
+        <mesh filename="package://ur_description/meshes/ur5/visual/camera.dae" scale="0.001 0.001 0.001"/>
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0.0 -1.57 0.0" xyz="-0.11 0.0 0.0"/>
+      <origin rpy="0.0 0.0 0.0" xyz="-0.0295 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://ur_description/meshes/ur5/collision/camera.stl"/>
+        <mesh filename="package://ur_description/meshes/ur5/collision/camera.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
-  <joint name="ur5_arm_marker_joint" type="fixed">
-    <origin rpy="0.0 0.0 0.0" xyz="0.22 0.0 0.0"/>
-    <parent link="ur5_arm_tool_mount_link"/>
-    <child link="ur5_arm_marker_link"/>
+  <link name="ur5_arm_camera_optical_frame"/>
+  <joint name="ur5_arm_camera_optical_joint" type="fixed">
+    <origin rpy="-1.5708 0.0 -1.5708" xyz="0.0 0.0 0.0"/>
+    <parent link="ur5_arm_camera_link"/>
+    <child link="ur5_arm_camera_optical_frame"/>
   </joint>
-  <link name="ur5_arm_marker_link">
+  <joint name="ur5_arm_laser_pointer_joint" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="0.157 0.0 0.0"/>
+    <parent link="ur5_arm_camera_mount_link"/>
+    <child link="ur5_arm_laser_pointer_link"/>
+  </joint>
+  <link name="ur5_arm_laser_pointer_link">
     <visual>
-      <origin rpy="0.0 1.57 0.0" xyz="-0.22 0.0 0.0"/>
+      <origin rpy="0.0 0.0 0.0" xyz="-0.157 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://ur_description/meshes/ur5/visual/marker.dae"/>
+        <mesh filename="package://ur_description/meshes/ur5/visual/laser_pointer.dae" scale="0.001 0.001 0.001"/>
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0.0 1.57 0.0" xyz="-0.22 0.0 0.0"/>
+      <origin rpy="0.0 0.0 0.0" xyz="-0.157 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://ur_description/meshes/ur5/collision/marker.stl"/>
+        <mesh filename="package://ur_description/meshes/ur5/collision/laser_pointer.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -705,6 +711,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
     <child link="ur5_arm_base_link"/>
     <origin rpy="0.0 0.0 -1.57" xyz="0.3058 0 0.0065"/>
   </joint>
+  <!-- Spawn LIDAR if laser_enabled = "true" -->
   <link name="base_laser">
     <inertial>
       <mass value="1.1"/>
@@ -783,6 +790,8 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
     <parent link="top_plate_link"/>
     <child link="base_laser_mount"/>
   </joint>
+  <!-- Spawn Kinect if kinect_enabled = "true" -->
+  <!-- Spawn KinectV2 if kinectv2_enabled = "true" -->
   <!-- Spawn the sensor arch link -->
   <link name="sensor_arch_mount_link">
     <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -800,7 +809,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
   </link>
   <!-- Attach the sensor arch to the top plate -->
   <joint name="sensor_arch_mount" type="fixed">
-    <origin rpy="0.0 0.0 -3.14" xyz="-0.35 0.0 0.51"/>
+    <origin rpy="0.0 0.0 -3.14159265359" xyz="-0.35 0.0 0.51"/>
     <parent link="top_plate_link"/>
     <child link="sensor_arch_mount_link"/>
   </joint>
@@ -813,7 +822,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
   <!-- Spawn the kinectv2 mount link -->
   <link name="camera_mount_link">
     <visual>
-      <origin rpy="1.57 0.0 1.57" xyz="0.0 0.0 0.0"/>
+      <origin rpy="1.57079632679 0.0 1.57079632679" xyz="0.0 0.0 0.0"/>
       <geometry>
         <mesh filename="package://husky_description/meshes/accessories/kinectv2_mount.dae"/>
       </geometry>
@@ -822,19 +831,19 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       </material>
     </visual>
     <collision>
-      <origin rpy="1.57 0.0 1.57" xyz="0.0 0.0 0.0"/>
+      <origin rpy="1.57079632679 0.0 1.57079632679" xyz="0.0 0.0 0.0"/>
       <geometry>
         <mesh filename="package://husky_description/meshes/accessories/kinectv2_mount.stl"/>
       </geometry>
     </collision>
   </link>
-  <joint name="kinect_frame_joint" type="fixed">
-    <origin rpy="0.0 0.18 3.14" xyz="0.0 0.095 0.11"/>
+  <joint name="kinectv2_frame_joint" type="fixed">
+    <origin rpy="0.0 0.0 3.14159265359" xyz="0.0 0.095 0.11"/>
     <parent link="camera_mount_link"/>
     <child link="camera_link"/>
   </joint>
   <!-- Create kinect reference frame -->
-  <!-- Add mesh for kinect -->
+  <!-- Add mesh for kinectv2 -->
   <link name="camera_link">
     <visual>
       <origin rpy="0 0 -1.570795" xyz="0.0 0.095 -0.04"/>
@@ -849,5 +858,12 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       </geometry>
     </collision>
   </link>
+  <link name="camera_optical_frame"/>
+  <joint name="camera_optical_joint" type="fixed">
+    <origin rpy="-1.57079632679 0 -1.57079632679" xyz="0 0 0"/>
+    <parent link="camera_link"/>
+    <child link="camera_optical_frame"/>
+  </joint>
+  <!-- Spawn Primesense Carmine 1.09 if primesense_enabled = "true" -->
 </robot>
 
