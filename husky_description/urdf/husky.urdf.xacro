@@ -204,7 +204,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 
       <!-- Attach the camera mount to the sensor arch -->
       <joint name="camera_mount_joint" type="fixed">
-           <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+           <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 3.14159265359"/>
            <parent link="sensor_arch_mount_link"/>
            <child link="camera_mount_link"/>
       </joint>
@@ -229,19 +229,12 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       </link>
 
       <joint name="kinectv2_frame_joint" type="fixed">
-        <origin xyz="0.0 0.095 0.11" rpy="0.0 0.0 3.14159265359" />
+        <origin xyz="0.028 -0.096 0.112" rpy="0.0 0.0 0.0" />
         <parent link="camera_mount_link"/>
-        <child link="camera_link"/>
+        <child link="kinect2_link"/>
       </joint>
 
-      <xacro:kinectv2_camera prefix="camera"/>
-
-      <link name="camera_optical_frame"/>
-      <joint name="camera_optical_joint" type="fixed">
-        <origin xyz="0 0 0" rpy="-1.57079632679 0 -1.57079632679"/>
-        <parent link="camera_link"/>
-        <child link="camera_optical_frame"/>
-      </joint>
+      <xacro:kinectv2_camera prefix="kinect2"/>
     </xacro:if>
 
     <!-- Spawn Primesense Carmine 1.09 if primesense_enabled = "true" -->
