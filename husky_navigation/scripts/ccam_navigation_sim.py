@@ -51,13 +51,14 @@ class CCAMNavigation():
         # that was used to launch RViz.
         locations = dict()
 
-        locations['start'] = Pose(Point(-0.094, 0.35, 0.000), Quaternion(0.000, 0.000, 0.739, 0.674))
-        locations['5m'] = Pose(Point(-0.507, 5.817, 0.000), Quaternion(0.000, 0.000, 0.735, 0.678))
-        locations['10m'] = Pose(Point(-0.997, 11.202, 0.000), Quaternion(0.000, 0.000, 0.739, 0.673))
-        locations['20m'] = Pose(Point(-1.832, 20.681, 0.000), Quaternion(0.000, 0.000, 0.747, 0.664))
-        locations['40m'] = Pose(Point(-3.927, 40.757, 0.000), Quaternion(0.000, 0.000, 0.735, 0.678))
-        locations['drill_start'] = Pose(Point(0.295, 0.838, 0.000), Quaternion(0.000, 0.000, 0.029, 1.000))
-        locations['seal_start'] = Pose(Point(-0.005, -0.536, 0.000, Quaternion(0.000, 0.000, 0.999, -0.032))
+        locations['start'] = Pose(Point(0,0,0), Quaternion(0,0,0,1))
+        locations['finish'] = Pose(Point(4.0,-4.075,0.0), Quaternion(0,0,1.05,1))
+        locations['sealant_station_1'] = Pose(Point(2.625,2.0646,0.0), Quaternion(0,0,1.05, 0.0))
+        locations['sealant_station_2'] = Pose(Point(2.625,5.8694,0.0), Quaternion(0,0,1.05, 0.0))
+        locations['drill_station_1'] = Pose(Point(7.6912,6.875,0.0), Quaternion(0,0,1.05,1))
+        locations['drill_station_2'] = Pose(Point(13.1912,6.875,0.0), Quaternion(0,0,1.05,1))
+        locations['charging_station'] = Pose(Point(9.0,-4.075,0.0), Quaternion(0,0,1.05,1))
+        locations['tool_change_station'] = Pose(Point(14.0,-4.075,0.0), Quaternion(0,0,1.05,1))
 
         # Publisher to manually control the robot (e.g. to stop it, queue_size=5)
         self.cmd_vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size=5)
@@ -92,7 +93,7 @@ class CCAMNavigation():
 
             location = raw_input('Enter desired location (ie. start, drill_station_1, etc.): ')
 
-            if location == "start" or location == "5m" or location == "10m" or location == "20m" or location == "40m" or location == "drill_start" or location == "seal_start":
+            if location == "start" or location == "finish" or location == "sealant_station_1" or location == "sealant_station_2" or location == "drill_station_1" or location == "drill_station_2" or location == "charging_station" or location == "tool_change_station":
 
                 # Set up the goal location
                 self.goal = MoveBaseGoal()
