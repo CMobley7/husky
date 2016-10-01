@@ -51,13 +51,13 @@ class CCAMNavigation():
         # that was used to launch RViz.
         locations = dict()
 
-        locations['start'] = Pose(Point(0.096, 0.424, 0.000), Quaternion(0.000, 0.000, 0.729, 0.685))
-        locations['5m'] = Pose(Point(-0.397, 5.760, 0.000), Quaternion(0.000, 0.000, 0.741, 0.672))
-        locations['10m'] = Pose(Point(-0.861, 10.799, 0.000), Quaternion(0.000, 0.000, 0.751, 0.661))
-        locations['20m'] = Pose(Point(-1.743, 20.089, 0.000), Quaternion(0.000, 0.000, 0.744, 0.668))
-        locations['40m'] = Pose(Point(-4.093, 40.355, 0.000), Quaternion(0.000, 0.000, -0.655, 0.755))
-        locations['drill_start'] = Pose(Point(0.162, 0.422, 0.000), Quaternion(0.000, 0.000, 0.058, 0.998))
-        locations['seal_start'] = Pose(Point(0.165, -1.098, 0.000), Quaternion(0.000, 0.000, 0.997, -0.074))
+        locations['start'] = Pose(Point(0.000, 0.000, 0.000), Quaternion(0.000, 0.000, 0.000, 1.000))
+        locations['5m'] = Pose(Point(5.000, 0.000, 0.000), Quaternion(0.000, 0.000, 0.000, 1.000))
+        locations['10m'] = Pose(Point(10.000, -0.525, 0.000), Quaternion(0.000, 0.000, 0.000, 1.000))
+        locations['20m'] = Pose(Point(20.000, -1.000, 0.000), Quaternion(0.000, 0.000, 0.000, 1.000))
+        locations['40m'] = Pose(Point(40.000, -1.250, 0.000), Quaternion(0.000, 0.000, 1.000, 0.000))
+        locations['drill_start'] = Pose(Point(0.400, 0.000, 0.000), Quaternion(0.000, 0.000, -0.700, 0.700))
+        locations['seal_start'] = Pose(Point(-0.600, 0.000, 0.000), Quaternion(0.000, 0.000, 0.700, 0.700))
 
         # Publisher to manually control the robot (e.g. to stop it, queue_size=5)
         self.cmd_vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size=5)
